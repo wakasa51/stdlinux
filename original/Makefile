@@ -6,7 +6,7 @@ program: $(OBJS)
 	gcc -o program $(OBJS)
 
 run : program
-	./program
+	./program ${ARG}
 
 clean :
 	rm -f ./program *.o
