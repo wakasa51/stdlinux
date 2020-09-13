@@ -14,8 +14,24 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "%s: file name not given\n", argv[0]);
     exit(1);
   }
-  for (i = 1; i < argc; i++) {
+
+  /* テキストにはないが、コマンドライン引数を受け取るようにしてみる */
+  int separate_with_file_name;
+  int opt;
+  while ((opt = getopt(argc, argv, "s")) != -1) {
+    switch (opt) {
+      case 's':
+        separate_with_file_name = 1;
+        break;
+      default:
+        printf("error! \'%c\' \'%c\'\n", opt, optopt);
+        return 1;
+    }
+  }
+  for (i = optind; i < argc; i++) {
+    if (separate_with_file_name) printf("\n----------%s----------\n\n", argv[i]);
     do_cat(argv[i]);
+    if (separate_with_file_name) printf("\n----------%s----------\n\n", argv[i]);
   }
   exit(0);
 }
